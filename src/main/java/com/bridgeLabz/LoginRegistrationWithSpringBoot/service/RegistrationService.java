@@ -25,4 +25,14 @@ public class RegistrationService {
 		}
 		return null;
 	}
+
+	public User getuserById(int userId) {
+		System.out.println("userId : "+userId);
+		User user = userRepository.findById(userId);
+		System.out.println("user : "+user);
+		if(user!=null){
+			return user;
+		}
+		return null;
+	}
 }
