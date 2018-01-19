@@ -14,24 +14,21 @@ import com.bridgeLabz.LoginRegistrationWithSpringBoot.service.LoginService;
 
 @RestController
 public class LoginController {
-	
+
 	@Autowired
 	private LoginService loginService;
-	
+
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public ResponseEntity<Response> login(@RequestBody User user){
 		Response response = new Response();
-		if(user!=null){
-			User userForCheck = loginService.login(user);
-			if(userForCheck!=null){
-				response.setResponseMessage("User successfully logedin.");
-				System.out.println(response);
-				return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
-			}
-			response.setResponseMessage("User is not logedin.");
-			return new ResponseEntity<Response>(response, HttpStatus.BAD_REQUEST);
+		User userForCheck = loginService.login(user);
+		if(userForCheck!=null){
+			response.setResponseMessage("User successfully logedin.");
+			System.out.println(response);
+			return new ResponseEntity<Response>(response, HttpStatus.ACCEPTED);
 		}
-		response.setResponseMessage("User is empty");
+		response.setResponseMessage("User is not logedin.");
 		return new ResponseEntity<Response>(response, HttpStatus.BAD_REQUEST);
 	}
+
 }

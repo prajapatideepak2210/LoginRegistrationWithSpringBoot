@@ -13,10 +13,7 @@ public class LoginService {
 	private UserRepository userRepository;
 
 	public User login(User loginUser){
-		if(loginUser==null){
-			System.out.println("kjasdfjasbfsjbfsjfs,dfasmfgasmfsjadfvbsfvb,msvhfnabs v");
-			return null;
-		}
+		
 		User userForCheck = userRepository.findByUserName(loginUser.getUserName());
 
 		if(userForCheck!=null){

@@ -8,5 +8,6 @@ public interface UserRepository extends CrudRepository<User, Integer>{
 
 	User findByUserName(String userName);
 
-	User findById(int userId);
+	User findByUserId(int userId);
+
 }

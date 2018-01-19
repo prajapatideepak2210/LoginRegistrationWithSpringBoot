@@ -4,9 +4,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.bridgeLabz.LoginRegistrationWithSpringBoot.controller.LoginController;
 import com.bridgeLabz.LoginRegistrationWithSpringBoot.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,8 +29,8 @@ public class LoginTest {
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	
-	@InjectMocks
-	private LoginController loginController;
+	/*@InjectMocks
+	private LoginController loginController;*/
 	
 	private MockMvc mockMvc;
 	
@@ -41,24 +40,35 @@ public class LoginTest {
 	}
 	
 	@Test
-	public void loginTest() throws Exception{
+	//@Ignore
+	public void loginSuccessTest() throws Exception{
 		User user = new User();
-		user.setUserName("akash@gmail.com");
-		user.setPassword("123456");
+		user.setUserName("deepak@gmail.com");
+		user.setPassword("12345678");
 		mockMvc.perform(MockMvcRequestBuilders.post("/login").contentType(MediaType.APPLICATION_JSON).
 				content(jsonObject(user))).andExpect(status().isAccepted()).andDo(print());
+		
+		/*System.out.println("kzdsjghdkanvksadbdv  : : "+response);
+		int staus = response.getStatus();
+		System.out.println("test status : "+staus);*/
 	}
 	
-	
-	private String jsonObject(User user) {
+	private String jsonObject(User user) throws JsonProcessingException{
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = null;
-		try {
-			jsonString = mapper.writeValueAsString(user);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+		jsonString = mapper.writeValueAsString(user);
 		return jsonString;
+	}
+	
+	@Test
+	//@Ignore
+	public void loginFailTest() throws Exception{
+		
+		User user = new User();
+		user.setUserName("aksh@gmail.com");
+		user.setPassword("123456");
+		mockMvc.perform(MockMvcRequestBuilders.post("/login").contentType(MediaType.APPLICATION_JSON).content(jsonObject(user)))
+		.andExpect(status().isBadRequest()).andDo(print());
 	}
 	
 }

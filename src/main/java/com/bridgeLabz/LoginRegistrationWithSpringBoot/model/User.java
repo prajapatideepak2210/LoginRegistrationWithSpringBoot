@@ -18,8 +18,15 @@ public class User {
 	private String name;
 	private String userName;
 	private String password;
+	private String contactNumber;
 	
 	
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
 	public int getId() {
 		return id;
 	}

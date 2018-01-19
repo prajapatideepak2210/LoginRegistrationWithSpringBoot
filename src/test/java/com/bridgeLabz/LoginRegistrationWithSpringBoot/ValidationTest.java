@@ -6,10 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,31 +22,18 @@ import com.bridgeLabz.LoginRegistrationWithSpringBoot.model.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebAppConfiguration
-@SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RegistrationTest {
-
+@SpringBootTest
+@WebAppConfiguration
+public class ValidationTest {
 	@Autowired
-	private WebApplicationContext webApplicationContext;
+	private WebApplicationContext webApplicationContext; 
 	
 	private MockMvc mockMvc;
 	
 	@Before
-	public void	setup(){
+	public void setup(){
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-	}
-	
-	@Test
-	//@Ignore
-	public void registrationTest() throws Exception{
-		User user = new User();
-		user.setName("deepak");
-		user.setUserName("deepak@gmail.com");
-		user.setPassword("12345678");
-		user.setContactNumber("8759645852");
-		mockMvc.perform(MockMvcRequestBuilders.post("/registration").contentType(MediaType.APPLICATION_JSON)
-				.content(jsonObject(user))).andExpect(status().isOk()).andDo(print());
 	}
 	
 	private String jsonObject(User user) throws JsonProcessingException{
@@ -59,28 +44,30 @@ public class RegistrationTest {
 	}
 	
 	@Test
-	//@Ignore
-	public void registrationFailTest() throws Exception{
+	public void validationNameTest() throws Exception{
 		User user = new User();
-		user.setName("deepak");
+		user.setName("deepak565");
+		user.setUserName("deepak@gmail.com");
+		user.setPassword("12365");
+		user.setContactNumber("84845555513");
 		mockMvc.perform(MockMvcRequestBuilders.post("/registration").contentType(MediaType.APPLICATION_JSON)
-				.content(jsonObject(user))).andExpect(status().isInternalServerError()).andDo(print());
+				.content(jsonObject(user))).andExpect(status().isNotAcceptable()).andDo(print())
+				.andExpect(jsonPath("$.responseMessage", Matchers.is("Name is not correct.")));
 	}
 	
 	@Test
-	//@Ignore
-	public void UserAlredyExistTest() throws JsonProcessingException, Exception{
+	public void validationUserNameTest() throws JsonProcessingException, Exception{
 		User user = new User();
-		user.setUserName("s@gmail.com");
-		user.setContactNumber("9745982735");
 		user.setName("deepak");
-		user.setPassword("deepak12");
+		user.setUserName("deepak@gmail");
+		user.setPassword("12365457");
+		user.setContactNumber("8484555551");
 		mockMvc.perform(MockMvcRequestBuilders.post("/registration").contentType(MediaType.APPLICATION_JSON)
-				.content(jsonObject(user))).andExpect(status().isBadRequest()).andDo(print());
+				.content(jsonObject(user))).andExpect(status().isNotAcceptable()).andDo(print())
+				.andExpect(jsonPath("$.responseMessage", Matchers.is("UserName is not correct.")));
 	}
 	
 	@Test
-	//@Ignore
 	public void validationPasswordTest() throws JsonProcessingException, Exception{
 		User user = new User();
 		user.setName("deepak");
@@ -90,6 +77,18 @@ public class RegistrationTest {
 		mockMvc.perform(MockMvcRequestBuilders.post("/registration").contentType(MediaType.APPLICATION_JSON)
 				.content(jsonObject(user))).andExpect(status().isNotAcceptable()).andDo(print())
 				.andExpect(jsonPath("$.responseMessage", Matchers.is("Password is not correct.")));
+	}
+	
+	@Test
+	public void validationContactNumberTest() throws JsonProcessingException, Exception{
+		User user = new User();
+		user.setName("deepak");
+		user.setUserName("deepak@gmail.com");
+		user.setPassword("1e3s5p78");
+		user.setContactNumber("84845555513457");
+		mockMvc.perform(MockMvcRequestBuilders.post("/registration").contentType(MediaType.APPLICATION_JSON)
+				.content(jsonObject(user))).andExpect(status().isNotAcceptable()).andDo(print())
+				.andExpect(jsonPath("$.responseMessage", Matchers.is("Contact Number is not correct.")));
 	}
 	
 }
