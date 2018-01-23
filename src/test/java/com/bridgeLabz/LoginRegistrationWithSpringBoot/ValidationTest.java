@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class ValidationTest {
 	}
 	
 	@Test
+	@Ignore
 	public void validationNameTest() throws Exception{
 		User user = new User();
 		user.setName("deepak565");
@@ -56,6 +58,7 @@ public class ValidationTest {
 	}
 	
 	@Test
+	@Ignore
 	public void validationUserNameTest() throws JsonProcessingException, Exception{
 		User user = new User();
 		user.setName("deepak");
@@ -68,6 +71,7 @@ public class ValidationTest {
 	}
 	
 	@Test
+	@Ignore
 	public void validationPasswordTest() throws JsonProcessingException, Exception{
 		User user = new User();
 		user.setName("deepak");
@@ -80,6 +84,7 @@ public class ValidationTest {
 	}
 	
 	@Test
+	@Ignore
 	public void validationContactNumberTest() throws JsonProcessingException, Exception{
 		User user = new User();
 		user.setName("deepak");

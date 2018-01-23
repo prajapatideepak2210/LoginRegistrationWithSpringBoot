@@ -40,7 +40,7 @@ public class RegistrationTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void registrationTest() throws Exception{
 		User user = new User();
 		user.setName("deepak");
@@ -59,7 +59,7 @@ public class RegistrationTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void registrationFailTest() throws Exception{
 		User user = new User();
 		user.setName("deepak");
@@ -68,7 +68,7 @@ public class RegistrationTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void UserAlredyExistTest() throws JsonProcessingException, Exception{
 		User user = new User();
 		user.setUserName("s@gmail.com");
@@ -80,7 +80,7 @@ public class RegistrationTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void validationPasswordTest() throws JsonProcessingException, Exception{
 		User user = new User();
 		user.setName("deepak");

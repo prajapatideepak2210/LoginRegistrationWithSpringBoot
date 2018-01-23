@@ -1,5 +1,10 @@
 package com.bridgeLabz.LoginRegistrationWithSpringBoot;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +21,39 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 public class UserTest {
-	
+
 	@Autowired
 	private WebApplicationContext webApplicationContext;
-	
+
 	private MockMvc mockMvc;
-	
-	public void setup(){
+
+	@Before
+	public void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
-	
-	/*@Test
-	public void getUserById(){
+
+	@Test
+	@Ignore
+	public void getUserByIdSuccessTest() throws Exception {
 		int id = 1;
-		mockMvc.perform(MockMvcRequestBuilders.post("'/getUserbyId/'+id").contentType(MediaType.APPLICATION_JSON))
-	}*/
+		mockMvc.perform(MockMvcRequestBuilders.get("/getUserbyId/{id}", id).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isAccepted()).andDo(print());
+	}
+	
+	@Test
+	@Ignore
+	public void getUserByIdFailedTest() throws Exception {
+		int id = 0;
+		mockMvc.perform(MockMvcRequestBuilders.get("/getUserbyId/{id}", id).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isBadRequest()).andDo(print());
+	}
+	
+	@Test
+	@Ignore
+	public void getAllUsers() throws Exception {
+		
+		mockMvc.perform(MockMvcRequestBuilders.get("/getAllUsers").contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isAccepted()).andDo(print());
+	}
+
 }

@@ -29,9 +29,6 @@ public class LoginTest {
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 	
-	/*@InjectMocks
-	private LoginController loginController;*/
-	
 	private MockMvc mockMvc;
 	
 	@Before
@@ -61,7 +58,7 @@ public class LoginTest {
 	}
 	
 	@Test
-	//@Ignore
+	@Ignore
 	public void loginFailTest() throws Exception{
 		
 		User user = new User();
